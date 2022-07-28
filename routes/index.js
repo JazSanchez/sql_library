@@ -16,12 +16,7 @@ function asyncHandler(cb){
 }
 
 /* GET home page. */
-// router.get('/', asyncHandler(async (req, res) => {
-//   // res.render('index', { title: 'Express' });
-//        const allBooks = await Book.finalAll();
-//        console.log(allBooks.map(books => books.toJSON() ))
- 
-//   }))
+
 router.get('/', async function(req, res) {
   res.redirect("/books");
 });
@@ -57,7 +52,7 @@ router.post('/books/new', asyncHandler(async (req, res) => {
 
 router.get('/books/:id', asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render('books/show',{books: book, title: book.title} )
+  res.render('books/update',{books: book, title: book.title} )
 
 }))
 
