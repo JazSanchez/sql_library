@@ -20,6 +20,7 @@ const sequelize = require('./models/index.js').sequelize;
 })
 
 
+
 var app = express();
 
 
@@ -35,6 +36,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
+app.get('/')
+
+//404 Error
+app.use((req, res, next) => {
+  const err = new Error("not-found");
+  err.status = 404;
+  err.message = "404 error handler has been called";
+  next(err);
+});
+
+//Global Error
+app.use((err, req, res) => {
+  if (err) {
+    if (err.status === 404) {
+      res.status(404)
+      render(err.message, { err });
+    } else {
+      err.message = "Oops! There seems to be an error with the server";
+      res.status(500).render('error', { err });
+    }
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
