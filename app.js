@@ -6,9 +6,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+// import sequlize and assign it to a variable 
 const sequelize = require('./models/index.js').sequelize;
-
+// Create an async function to establish a connection 
 (async () => {
   try {
     await sequelize.authenticate();
@@ -41,6 +41,7 @@ app.use('/users', usersRouter);
 
 app.get('/')
 
+//Middleware
 //404 Error
 app.use((req, res, next) => {
   const err = new Error("not-found");
@@ -61,6 +62,7 @@ app.use((err, req, res) => {
     }
   }
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
